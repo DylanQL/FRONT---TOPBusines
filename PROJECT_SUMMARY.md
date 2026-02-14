@@ -73,9 +73,11 @@ FRONT - SEIDOR/
 
 - [x] **Sistema de favoritos**
   - Agregar personajes a favoritos
+  - **Eliminar personajes de favoritos** (nuevo endpoint DELETE)
   - Listado paginado de favoritos
   - Persistencia en backend (MySQL)
   - Los favoritos no aparecen en la búsqueda
+  - Sincronización automática al agregar/eliminar
 
 - [x] **Paginación**
   - En listado de búsqueda (10 por página, 9 páginas totales)

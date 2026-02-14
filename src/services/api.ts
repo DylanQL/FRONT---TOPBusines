@@ -112,6 +112,13 @@ export const favoritesApi = {
     const response = await api.post<ApiResponse<CharacterWithId>>(`/api/favorites`, payload);
     return response.data.data;
   },
+
+  /**
+   * Delete a character from favorites
+   */
+  deleteFavorite: async (id: number): Promise<void> => {
+    await api.delete<ApiResponse<{ message: string }>>(`/api/favorites/${id}`);
+  },
 };
 
 // Health check

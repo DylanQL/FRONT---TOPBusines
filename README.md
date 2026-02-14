@@ -249,10 +249,11 @@ FRONT - SEIDOR/
 
 - Tab dedicado para ver favoritos
 - Paginación configurada (10 por página, ajustable)
+- **Eliminar de favoritos**: Click en el corazón rojo para quitar de favoritos
 - Muestra:
   - Información completa del personaje
   - Fecha de cuando se agregó a favoritos
-  - Indicador visual de favorito (❤️)
+  - Botón de corazón activo para eliminar
 
 ### 4. Paginación
 

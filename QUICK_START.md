@@ -62,10 +62,17 @@ Deberías ver:
 
 ### Verifica que puedas agregar favoritos
 
-1. Haz clic en el corazón (🤍) de cualquier personaje
-2. El personaje debería desaparecer de la lista
+1. Haz clic en el corazón blanco (🤍) de cualquier personaje
+2. El personaje debería desaparecer de la lista de búsqueda
 3. Ve a la tab "❤️ Mis Favoritos"
-4. Deberías ver el personaje agregado
+4. Deberías ver el personaje agregado con un corazón rojo
+
+### Verifica que puedas eliminar favoritos
+
+1. En la tab "❤️ Mis Favoritos"
+2. Haz clic en el corazón rojo (❤️) de cualquier personaje favorito
+3. El personaje debería desaparecer de favoritos
+4. Regresa a "Buscar Personajes" y el personaje debería aparecer nuevamente
 
 ---
 

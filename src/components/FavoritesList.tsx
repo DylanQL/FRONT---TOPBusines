@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
 import { ErrorMessage } from './ErrorMessage';
 import { EmptyState } from './EmptyState';
@@ -11,6 +11,7 @@ interface FavoritesListProps {
   error: string | null;
   pagination: PaginationInfo;
   onPageChange: (page: number) => void;
+  onDeleteFavorite: (id: number) => Promise<void>;
   onRetry?: () => void;
 }
 
@@ -30,8 +31,22 @@ export const FavoritesList: React.FC<FavoritesListProps> = ({
   error,
   pagination,
   onPageChange,
+  onDeleteFavorite,
   onRetry,
 }) => {
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+
+  const handleDelete = async (id: number) => {
+    setDeletingId(id);
+    try {
+      await onDeleteFavorite(id);
+    } catch (error) {
+      console.error('Error deleting favorite:', error);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -49,6 +64,7 @@ export const FavoritesList: React.FC<FavoritesListProps> = ({
       <div className="character-list">
         {favorites.map((favorite) => {
           const borderColor = getGenderBorderColor(favorite.gender);
+          const isDeleting = deletingId === favorite.id;
           
           return (
             <div
@@ -58,13 +74,20 @@ export const FavoritesList: React.FC<FavoritesListProps> = ({
                 borderColor: borderColor,
                 borderWidth: '3px',
                 borderStyle: 'solid',
+                opacity: isDeleting ? 0.5 : 1,
               }}
             >
               <div className="character-card-header">
                 <h3 className="character-name">{favorite.name}</h3>
-                <span className="favorite-indicator" aria-label="Favorito">
-                  ❤️
-                </span>
+                <button
+                  onClick={() => handleDelete(favorite.id)}
+                  disabled={isDeleting}
+                  className="favorite-button favorite-button-active"
+                  aria-label="Eliminar de favoritos"
+                  title="Eliminar de favoritos"
+                >
+                  {isDeleting ? '⏳' : '❤️'}
+                </button>
               </div>
 
               <div className="character-details">

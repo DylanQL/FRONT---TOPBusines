@@ -7,7 +7,9 @@ interface UseFavoritesReturn {
   loading: boolean;
   error: string | null;
   addingFavorite: boolean;
+  deletingFavorite: boolean;
   addFavorite: (characterId: number) => Promise<void>;
+  deleteFavorite: (id: number) => Promise<void>;
   reloadFavorites: () => Promise<void>;
   favoriteIds: number[];
   pagination: {
@@ -28,6 +30,7 @@ export const useFavorites = (): UseFavoritesReturn => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [addingFavorite, setAddingFavorite] = useState(false);
+  const [deletingFavorite, setDeletingFavorite] = useState(false);
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState({
     page: 1,
@@ -92,6 +95,26 @@ export const useFavorites = (): UseFavoritesReturn => {
     }
   };
 
+  const deleteFavorite = async (id: number) => {
+    try {
+      setDeletingFavorite(true);
+      setError(null);
+      await favoritesApi.deleteFavorite(id);
+      
+      // Reload favorites and IDs after deleting
+      await Promise.all([
+        loadFavorites(page),
+        loadAllFavoriteIds(),
+      ]);
+    } catch (err) {
+      const errorMessage = handleApiError(err);
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setDeletingFavorite(false);
+    }
+  };
+
   const reloadFavorites = async () => {
     await Promise.all([
       loadFavorites(page),
@@ -104,7 +127,9 @@ export const useFavorites = (): UseFavoritesReturn => {
     loading,
     error,
     addingFavorite,
+    deletingFavorite,
     addFavorite,
+    deleteFavorite,
     reloadFavorites,
     favoriteIds: allFavoriteIds,
     pagination,

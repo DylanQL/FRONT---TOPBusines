@@ -283,6 +283,24 @@ body {
   opacity: 0.5;
 }
 
+.favorite-button-active {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.favorite-button-active:hover {
+  transform: scale(1.3);
+  filter: brightness(1.2);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 .favorite-indicator {
   cursor: default;
 }

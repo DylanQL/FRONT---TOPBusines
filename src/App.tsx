@@ -16,6 +16,7 @@ function App() {
     loading: favoritesLoading,
     error: favoritesError,
     addFavorite,
+    deleteFavorite,
     reloadFavorites,
     favoriteIds,
     pagination,
@@ -52,6 +53,17 @@ function App() {
     } catch (error) {
       // Error is already handled in the hook
       console.error('Failed to add favorite:', error);
+    }
+  };
+
+  const handleDeleteFavorite = async (id: number) => {
+    try {
+      await deleteFavorite(id);
+      // Reload characters to update the filtered list
+      await reloadCharacters();
+    } catch (error) {
+      // Error is already handled in the hook
+      console.error('Failed to delete favorite:', error);
     }
   };
 
@@ -125,6 +137,7 @@ function App() {
               error={favoritesError}
               pagination={pagination}
               onPageChange={setPage}
+              onDeleteFavorite={handleDeleteFavorite}
               onRetry={reloadFavorites}
             />
           </div>
