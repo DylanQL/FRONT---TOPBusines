@@ -1,5 +1,4 @@
 import React from 'react';
-import { CharacterCard } from './CharacterCard';
 import { LoadingSpinner } from './LoadingSpinner';
 import { ErrorMessage } from './ErrorMessage';
 import { EmptyState } from './EmptyState';

@@ -57,7 +57,8 @@ Deberías ver:
 
 1. Ve a la tab "🔍 Buscar Personajes"
 2. Espera a que carguen todos los personajes (puede tardar unos segundos)
-3. Deberías ver una lista de personajes de Star Wars
+3. Deberías ver una lista de personajes de Star Wars con paginación (10 por página, 9 páginas totales)
+4. Usa los botones de paginación para navegar entre páginas (verás páginas 1-9)
 
 ### Verifica que puedas agregar favoritos
 

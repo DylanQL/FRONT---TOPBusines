@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SearchBar } from './components/SearchBar';
 import { CharacterList } from './components/CharacterList';
 import { FavoritesList } from './components/FavoritesList';
@@ -26,11 +26,14 @@ function App() {
   const {
     characters: allCharacters,
     filteredCharacters,
+    paginatedCharacters,
     loading: charactersLoading,
     error: charactersError,
     searchFilters,
     setSearchFilters,
     reloadCharacters,
+    pagination: charactersPagination,
+    setPage: setCharactersPage,
   } = useCharacters(favoriteIds);
 
   const handleSearchTypeChange = (type: SearchType) => {
@@ -102,12 +105,14 @@ function App() {
             </div>
 
             <CharacterList
-              characters={filteredCharacters}
+              characters={paginatedCharacters}
               allCharacters={allCharacters}
               loading={charactersLoading}
               error={charactersError}
               onAddToFavorites={handleAddToFavorites}
               onRetry={reloadCharacters}
+              pagination={charactersPagination}
+              onPageChange={setCharactersPage}
             />
           </div>
         )}

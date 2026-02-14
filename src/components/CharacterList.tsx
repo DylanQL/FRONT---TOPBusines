@@ -3,7 +3,8 @@ import { CharacterCard } from './CharacterCard';
 import { LoadingSpinner } from './LoadingSpinner';
 import { ErrorMessage } from './ErrorMessage';
 import { EmptyState } from './EmptyState';
-import type { Character } from '../types';
+import { Pagination } from './Pagination';
+import type { Character, PaginationInfo } from '../types';
 
 interface CharacterListProps {
   characters: Character[];
@@ -12,6 +13,8 @@ interface CharacterListProps {
   error: string | null;
   onAddToFavorites: (swapiId: number) => Promise<void>;
   onRetry?: () => void;
+  pagination?: PaginationInfo;
+  onPageChange?: (page: number) => void;
 }
 
 export const CharacterList: React.FC<CharacterListProps> = ({
@@ -21,6 +24,8 @@ export const CharacterList: React.FC<CharacterListProps> = ({
   error,
   onAddToFavorites,
   onRetry,
+  pagination,
+  onPageChange,
 }) => {
   if (loading) {
     return <LoadingSpinner />;
@@ -35,22 +40,33 @@ export const CharacterList: React.FC<CharacterListProps> = ({
   }
 
   return (
-    <div className="character-list">
-      {characters.map((character) => {
-        // Find the original index in allCharacters to get correct SWAPI ID
-        const characterIndex = allCharacters.findIndex((c) => c.name === character.name);
-        
-        return (
-          <CharacterCard
-            key={`${character.name}-${characterIndex}`}
-            character={character}
-            characterIndex={characterIndex}
-            onAddToFavorites={onAddToFavorites}
-            showFavoriteButton={true}
-            isFavorite={false}
-          />
-        );
-      })}
+    <div className="characters-container">
+      <div className="character-list">
+        {characters.map((character) => {
+          // Find the original index in allCharacters to get correct SWAPI ID
+          const characterIndex = allCharacters.findIndex((c) => c.name === character.name);
+          
+          return (
+            <CharacterCard
+              key={`${character.name}-${characterIndex}`}
+              character={character}
+              characterIndex={characterIndex}
+              onAddToFavorites={onAddToFavorites}
+              showFavoriteButton={true}
+              isFavorite={false}
+            />
+          );
+        })}
+      </div>
+
+      {pagination && onPageChange && pagination.totalPages > 1 && (
+        <Pagination
+          currentPage={pagination.page}
+          totalPages={pagination.totalPages}
+          onPageChange={onPageChange}
+          disabled={loading}
+        />
+      )}
     </div>
   );
 };

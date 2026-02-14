@@ -235,6 +235,7 @@ FRONT - SEIDOR/
   - **Por nombre**: búsqueda parcial (ej: "luke" encuentra "Luke Skywalker")
   - **Por ID**: búsqueda exacta del ID de SWAPI (1-87)
 - Los personajes ya agregados a favoritos **no se muestran** en la búsqueda
+- **Paginación**: 10 personajes por página (coincide con SWAPI) - total de 9 páginas
 
 ### 2. Agregar a Favoritos
 
@@ -253,7 +254,16 @@ FRONT - SEIDOR/
   - Fecha de cuando se agregó a favoritos
   - Indicador visual de favorito (❤️)
 
-### 4. Bordes de Género
+### 4. Paginación
+
+- **Lista de personajes**: 10 personajes por página (9 páginas para 87 personajes)
+- **Lista de favoritos**: 10 favoritos por página
+- Navegación entre páginas con números
+- Se reset automáticamente al cambiar filtros de búsqueda
+- Indicadores visuales de página actual
+- Coincide con la paginación de SWAPI
+
+### 5. Bordes de Género
 
 Los bordes de las tarjetas cambian según el género:
 

@@ -78,9 +78,12 @@ FRONT - SEIDOR/
   - Los favoritos no aparecen en la búsqueda
 
 - [x] **Paginación**
+  - En listado de búsqueda (10 por página, 9 páginas totales)
   - En favoritos (10 por página)
   - Navegación entre páginas
   - Información de total de resultados
+  - Reset automático al cambiar filtros
+  - Coincide con la estructura de SWAPI
 
 - [x] **UI/UX**
   - Bordes de color por género:
@@ -341,7 +344,7 @@ Ver sección "Decisiones Técnicas" en [README.md](./README.md):
 
 - ✅ **TypeScript en React**: 100% tipado
 - ✅ **Pruebas unitarias**: Vitest + RTL configurado
-- ✅ **Paginación**: Implementada en favoritos
+- ✅ **Paginación**: Implementada en personajes (10/pág, 9 páginas) y favoritos (10/pág)
 - ✅ **Deploy ready**: Build optimizado con Vite
 - ✅ **Buenas prácticas**: ESLint, estructura modular
 - ✅ **Documentación**: 3 archivos MD detallados

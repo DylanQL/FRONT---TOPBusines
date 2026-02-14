@@ -1,15 +1,23 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { charactersApi, handleApiError } from '../services/api';
 import type { Character, SearchFilters } from '../types';
 
 interface UseCharactersReturn {
   characters: Character[];
   filteredCharacters: Character[];
+  paginatedCharacters: Character[];
   loading: boolean;
   error: string | null;
   searchFilters: SearchFilters;
   setSearchFilters: (filters: SearchFilters) => void;
   reloadCharacters: () => Promise<void>;
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+  setPage: (page: number) => void;
 }
 
 /**
@@ -21,6 +29,8 @@ export const useCharacters = (favoriteIds: number[]): UseCharactersReturn => {
   const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const pageSize = 10; // 10 characters per page (matches SWAPI pagination)
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({
     type: 'name',
     query: '',
@@ -81,13 +91,40 @@ export const useCharacters = (favoriteIds: number[]): UseCharactersReturn => {
     setFilteredCharacters(result);
   }, [characters, searchFilters, favoriteIds]);
 
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [searchFilters]);
+
+  // Calculate pagination
+  const pagination = useMemo(() => {
+    const total = filteredCharacters.length;
+    const totalPages = Math.ceil(total / pageSize);
+    return {
+      page,
+      pageSize,
+      total,
+      totalPages,
+    };
+  }, [filteredCharacters.length, page, pageSize]);
+
+  // Get paginated characters
+  const paginatedCharacters = useMemo(() => {
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return filteredCharacters.slice(startIndex, endIndex);
+  }, [filteredCharacters, page, pageSize]);
+
   return {
     characters,
     filteredCharacters,
+    paginatedCharacters,
     loading,
     error,
     searchFilters,
     setSearchFilters,
     reloadCharacters: loadAllCharacters,
+    pagination,
+    setPage,
   };
 };
